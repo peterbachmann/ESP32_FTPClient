@@ -42,21 +42,21 @@ void setup()
   Serial.println(ESP.getMaxAllocHeap());
   Serial.println("");
 
-  ftp.OpenConnection();
+  ftp.openConnection();
 
   //Change directory
-  ftp.ChangeWorkDir("/public_html/zyro/gallery_gen");
+  ftp.changeWorkDir("/public_html/zyro/gallery_gen");
 
   // Create a new file to use as the download example below:
-  ftp.InitFile("Type A");
-  ftp.NewFile("helloworld.txt");
-  ftp.Write("Hi, I'm a new file");
-  ftp.CloseFile();
+  ftp.initFile("Type A");
+  ftp.newFile("helloworld.txt");
+  ftp.write("Hi, I'm a new file");
+  ftp.closeFile();
 
   //Download the text file or read it
   String response = "";
-  ftp.InitFile("Type A");
-  ftp.DownloadString("helloworld.txt", response);
+  ftp.initFile("Type A");
+  ftp.downloadString("helloworld.txt", response);
   Serial.println("The file content is: " + response);
 
   // Get the file size
@@ -66,8 +66,8 @@ void setup()
 
   // Get the directory content in order to allocate buffer
   // my server response is type=file;size=18;modify=20190731140703;unix.mode=0644;unix.uid=10183013;unix.gid=10183013;unique=809g7c8e92e4; helloworld.txt
-  ftp.InitFile("Type A");
-  ftp.ContentList("", list);
+  ftp.initFile("Type A");
+  ftp.contentList("", list);
   for (uint8_t i = 0; i < sizeof(list); i++)
   {
     uint8_t indexSize = 0;
@@ -99,24 +99,24 @@ void setup()
   unsigned char *downloaded_file = (unsigned char *)malloc(fileSize);
 
   // And download the file
-  ftp.InitFile("Type I");
-  ftp.DownloadFile(fileName, downloaded_file, fileSize, false);
+  ftp.initFile("Type I");
+  ftp.downloadFile(fileName, downloaded_file, fileSize, false);
 
   //Create a new Directory
-  ftp.InitFile("Type I");
-  ftp.MakeDir("myNewDir");
+  ftp.initFile("Type I");
+  ftp.makeDir("myNewDir");
 
   //Enter the directory
-  ftp.ChangeWorkDir("/public_html/zyro/gallery_gen/myNewDir");
+  ftp.changeWorkDir("/public_html/zyro/gallery_gen/myNewDir");
 
   //And upload the file to the new directory
-  ftp.NewFile(fileName);
-  ftp.WriteData(downloaded_file, fileSize);
-  ftp.CloseFile();
+  ftp.newFile(fileName);
+  ftp.writeData(downloaded_file, fileSize);
+  ftp.closeFile();
 
   free(downloaded_file);
 
-  ftp.CloseConnection();
+  ftp.closeConnection();
 }
 
 void loop()

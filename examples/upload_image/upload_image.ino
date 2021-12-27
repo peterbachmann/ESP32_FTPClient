@@ -40,13 +40,13 @@ void setup()
   Serial.print("IP address: ");
   Serial.println(WiFi.localIP());
 
-  ftp.OpenConnection();
+  ftp.openConnection();
 
   // Get directory content
-  ftp.InitFile("Type A");
+  ftp.initFile("Type A");
   String list[128];
-  ftp.ChangeWorkDir("/public_html/zyro/gallery_gen/");
-  ftp.ContentList("", list);
+  ftp.changeWorkDir("/public_html/zyro/gallery_gen/");
+  ftp.contentList("", list);
   Serial.println("\nDirectory info: ");
   for (int i = 0; i < sizeof(list); i++)
   {
@@ -57,23 +57,23 @@ void setup()
   }
 
   // Make a new directory
-  ftp.InitFile("Type A");
-  ftp.MakeDir("my_new_dir");
+  ftp.initFile("Type A");
+  ftp.makeDir("my_new_dir");
 
   // Create the new file and send the image
-  ftp.ChangeWorkDir("my_new_dir");
-  ftp.InitFile("Type I");
-  ftp.NewFile("octocat.jpg");
-  ftp.WriteData(octocat_pic, sizeof(octocat_pic));
-  ftp.CloseFile();
+  ftp.changeWorkDir("my_new_dir");
+  ftp.initFile("Type I");
+  ftp.newFile("octocat.jpg");
+  ftp.writeData(octocat_pic, sizeof(octocat_pic));
+  ftp.closeFile();
 
   // Create the file new and write a string into it
-  ftp.InitFile("Type A");
-  ftp.NewFile("hello_world.txt");
-  ftp.Write("Hello World");
-  ftp.CloseFile();
+  ftp.initFile("Type A");
+  ftp.newFile("hello_world.txt");
+  ftp.write("Hello World");
+  ftp.closeFile();
 
-  ftp.CloseConnection();
+  ftp.closeConnection();
 }
 
 void loop()
